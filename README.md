@@ -14,7 +14,9 @@ List the top-level sections of the README template, along with a hyperlink to th
 ### Required
 
 1. [Overview](#overview-required)
+    - [Cost](#cost)
 2. [Prerequisites](#prerequisites-required)
+    - [Operating System](#operating-system-required)
 3. [Deployment Steps](#deployment-steps-required)
 4. [Deployment Validation](#deployment-validation-required)
 5. [Running the Guidance](#running-the-guidance-required)
