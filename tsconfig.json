@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "importHelpers": true,
+    "module": "commonjs",
+    "outDir": "dist",
+    "rootDir": "src",
+    "strict": true,
+    "target": "es2019",
+    "esModuleInterop": true,
+    "noImplicitAny": false
+  },
+  "ts-node": {
+    "esm": true
+  },
+  "exclude": [
+    "./**/__mocks__/*.ts",
+    ".git",
+    ".history",
+    ".vscode",
+    "cdk.out",
+    "dist",
+    "lib",
+    "node_modules"
+  ],
+  "include": [
+    "src/**/*.ts"
+  ]
+}

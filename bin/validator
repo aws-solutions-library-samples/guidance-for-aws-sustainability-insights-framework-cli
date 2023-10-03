@@ -1,0 +1,36 @@
+#!/usr/bin/env node
+
+const Conf = require("conf");
+const rushlib = require("@microsoft/rush-lib");
+const fs = require("fs");
+
+const loadSifValidatorFunction = () => {
+    const config = new Conf({
+        projectName: "sif", schema: {
+            sifCorePath: {
+                type: "string"
+            }
+
+        }
+    });
+    const sifCorePath = config.get("sifCorePath");
+    if (sifCorePath) {
+        const rushConfiguration = rushlib.RushConfiguration.loadFromDefaultLocation({
+            startingFolder: sifCorePath
+        });
+        const modules = ['@sif/infrastructure-platform', '@sif/infrastructure-tenant'];
+        const [platformPackage, tenantPackage] = modules.map(m => {
+            const moduleConfiguration = rushConfiguration.findProjectByShorthandName(m);
+            const validatorLocation = `${moduleConfiguration.projectFolder}/dist/cjs/${process.env.VALIDATOR_MODULE_FILENAME}`;
+            if (!fs.existsSync(validatorLocation)) {
+                return {};
+            }
+            return require(validatorLocation);
+        })
+
+        global.platformPackage = platformPackage;
+        global.tenantPackage = tenantPackage;
+    }
+};
+
+module.exports = loadSifValidatorFunction;

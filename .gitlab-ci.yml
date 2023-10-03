@@ -1,0 +1,70 @@
+# Official framework image. Look for the different tagged releases at: https://hub.docker.com/r/library/node/tags/
+variables:
+  CONFIG_PACKAGE_NAME: sif-cli
+  RUSH_PARALLELISM: 8
+  APP_CONFIG_DIR: common/build/configdir
+  BRANCH: main
+  ENVIRONMENT: staging
+  AWS_REGION: us-west-2
+
+.prod-variables: &prod-variables
+  ENVIRONMENT: production
+  AWS_REGION: us-west-2
+
+.main-run-condition: &main-run-condition
+  - if: ($CI_COMMIT_BRANCH == "main" && $CI_COMMIT_MESSAGE != /.*\[skip ci\].*/)
+
+.common-build-steps: &common-build-steps # install dependencies
+  - pushd ${CI_PROJECT_DIR}/
+  - npm install
+  - popd
+
+
+
+.common-install-dependencies: &common-install-dependencies
+  - uname -r
+  - yum install -y amazon-linux-extras
+  - amazon-linux-extras install epel -y
+  - yum update -y
+  - yum install p7zip git tar perl-Digest-SHA xz sudo -y
+  - cp /usr/bin/7za /usr/bin/7z
+
+
+.common-artifacts: &common-artifacts
+  artifacts:
+    paths:
+      - dist/*.tar.*
+      - dist/macos/*
+
+
+stages:
+  - package
+default:
+  tags:
+    - arch:amd64
+    - size:large
+  image:
+    name: public.ecr.aws/lambda/nodejs:18
+    entrypoint: [ '' ]
+  before_script:
+    - *common-install-dependencies
+
+package:
+  image:
+    name: public.ecr.aws/lambda/nodejs:18
+    entrypoint: [ '' ]
+  before_script:
+    - *common-install-dependencies
+  rules:
+    - *main-run-condition
+  stage: package
+  variables:
+    <<: *prod-variables
+  script:
+    - *common-build-steps
+    - pushd ${CI_PROJECT_DIR}/
+    - npm run package:tarballs
+    - ls dist
+  artifacts:
+    paths:
+      - dist/sif-*-linux-x64.tar.gz

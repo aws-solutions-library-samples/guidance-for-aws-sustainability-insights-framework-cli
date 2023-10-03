@@ -1,202 +1,820 @@
-# Guidance Title (required)
+sif-cli
+=================
+
+CLI to interact with Sustainability Insight Framework
+
+[![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
+[![CircleCI](https://circleci.com/gh/oclif/hello-world/tree/main.svg?style=shield)](https://circleci.com/gh/oclif/hello-world/tree/main)
+[![GitHub license](https://img.shields.io/github/license/oclif/hello-world)](https://github.com/oclif/hello-world/blob/main/LICENSE)
+
+<!-- toc -->
+* [Usage](#usage)
+* [Commands](#commands)
+<!-- tocstop -->
+
+# Usage
+
+<!-- usage -->
+```sh-session
+$ npm install -g @sif/cli
+$ sif COMMAND
+running command...
+$ sif (--version)
+@sif/cli/0.1.0 darwin-x64 node-v18.17.1
+$ sif --help [COMMAND]
+USAGE
+  $ sif COMMAND
+...
+```
+<!-- usagestop -->
+
+# Commands
+
+<!-- commands -->
+* [`sif core build`](#sif-core-build)
+* [`sif core clone`](#sif-core-clone)
+* [`sif core releases`](#sif-core-releases)
+* [`sif core switch`](#sif-core-switch)
+* [`sif core version`](#sif-core-version)
+* [`sif environment configure`](#sif-environment-configure)
+* [`sif environment delete`](#sif-environment-delete)
+* [`sif environment install`](#sif-environment-install)
+* [`sif environment list`](#sif-environment-list)
+* [`sif environment upgrade`](#sif-environment-upgrade)
+* [`sif environment version`](#sif-environment-version)
+* [`sif help [COMMANDS]`](#sif-help-commands)
+* [`sif init`](#sif-init)
+* [`sif instance auth`](#sif-instance-auth)
+* [`sif instance configure`](#sif-instance-configure)
+* [`sif instance delete`](#sif-instance-delete)
+* [`sif instance insomnia`](#sif-instance-insomnia)
+* [`sif instance install`](#sif-instance-install)
+* [`sif instance list`](#sif-instance-list)
+* [`sif instance postman`](#sif-instance-postman)
+* [`sif instance start`](#sif-instance-start)
+* [`sif instance upgrade`](#sif-instance-upgrade)
+* [`sif plugins`](#sif-plugins)
+* [`sif plugins:install PLUGIN...`](#sif-pluginsinstall-plugin)
+* [`sif plugins:inspect PLUGIN...`](#sif-pluginsinspect-plugin)
+* [`sif plugins:install PLUGIN...`](#sif-pluginsinstall-plugin-1)
+* [`sif plugins:link PLUGIN`](#sif-pluginslink-plugin)
+* [`sif plugins:uninstall PLUGIN...`](#sif-pluginsuninstall-plugin)
+* [`sif plugins:uninstall PLUGIN...`](#sif-pluginsuninstall-plugin-1)
+* [`sif plugins:uninstall PLUGIN...`](#sif-pluginsuninstall-plugin-2)
+* [`sif plugins update`](#sif-plugins-update)
 
-The Guidance title should be consistent with the title established first in Alchemy.
+## `sif core build`
 
-**Example:** *Guidance for Product Substitutions on AWS*
+Performs incremental build of all SIF modules
 
-This title correlates exactly to the Guidance it’s linked to, including its corresponding sample code repository. 
+```
+USAGE
+  $ sif core build
 
+DESCRIPTION
+  Performs incremental build of all SIF modules
 
-## Table of Content (required)
+EXAMPLES
+  $ sif core build
+```
 
-List the top-level sections of the README template, along with a hyperlink to the specific section.
+_See code: [dist/commands/core/build.ts](https://github.com/aws-solutions-library-sample/sif-cli/blob/v0.1.0/dist/commands/core/build.ts)_
 
-### Required
+## `sif core clone`
 
-1. [Overview](#overview-required)
-    - [Cost](#cost)
-2. [Prerequisites](#prerequisites-required)
-    - [Operating System](#operating-system-required)
-3. [Deployment Steps](#deployment-steps-required)
-4. [Deployment Validation](#deployment-validation-required)
-5. [Running the Guidance](#running-the-guidance-required)
-6. [Next Steps](#next-steps-required)
-7. [Cleanup](#cleanup-required)
+Clone SIF into current folder
 
-***Optional***
+```
+USAGE
+  $ sif core clone [-r <value>]
 
-8. [FAQ, known issues, additional considerations, and limitations](#faq-known-issues-additional-considerations-and-limitations-optional)
-9. [Revisions](#revisions-optional)
-10. [Notices](#notices-optional)
-11. [Authors](#authors-optional)
+FLAGS
+  -r, --repositoryUrl=<value>  Url of sif repository
 
-## Overview (required)
+DESCRIPTION
+  Clone SIF into current folder
 
-1. Provide a brief overview explaining the what, why, or how of your Guidance. You can answer any one of the following to help you write this:
+EXAMPLES
+  $ sif core clone -r https://github.com/aws-solutions-library-samples/guidance-for-aws-sustainability-insights-framework
 
-    - **Why did you build this Guidance?**
-    - **What problem does this Guidance solve?**
+  $ sif core clone
+```
 
-2. Include the architecture diagram image, as well as the steps explaining the high-level overview and flow of the architecture. 
-    - To add a screenshot, create an ‘assets/images’ folder in your repository and upload your screenshot to it. Then, using the relative file path, add it to your README. 
+_See code: [dist/commands/core/clone.ts](https://github.com/aws-solutions-library-sample/sif-cli/blob/v0.1.0/dist/commands/core/clone.ts)_
 
-### Cost
+## `sif core releases`
 
-This section is for a high-level cost estimate. Think of a likely straightforward scenario with reasonable assumptions based on the problem the Guidance is trying to solve. If applicable, provide an in-depth cost breakdown table in this section.
+Listing the existing tags in the SIF repository
 
-Start this section with the following boilerplate text:
+```
+USAGE
+  $ sif core releases [--json]
 
-_You are responsible for the cost of the AWS services used while running this Guidance. As of <month> <year>, the cost for running this Guidance with the default settings in the <Default AWS Region (Most likely will be US East (N. Virginia)) > is approximately $<n.nn> per month for processing ( <nnnnn> records )._
+GLOBAL FLAGS
+  --json  Format output as json.
 
-Replace this amount with the approximate cost for running your Guidance in the default Region. This estimate should be per month and for processing/serving resonable number of requests/entities.
+DESCRIPTION
+  Listing the existing tags in the SIF repository
 
+EXAMPLES
+  $ sif core releases
+```
 
-## Prerequisites (required)
+_See code: [dist/commands/core/releases.ts](https://github.com/aws-solutions-library-sample/sif-cli/blob/v0.1.0/dist/commands/core/releases.ts)_
 
-### Operating System (required)
+## `sif core switch`
 
-- Talk about the base Operating System (OS) and environment that can be used to run or deploy this Guidance, such as *Mac, Linux, or Windows*. Include all installable packages or modules required for the deployment. 
-- By default, assume Amazon Linux 2/Amazon Linux 2023 AMI as the base environment. All packages that are not available by default in AMI must be listed out.  Include the specific version number of the package or module.
+Switch the local SIF repository to the specified RELEASE, BRANCH or COMMIT ID
 
-**Example:**
-“These deployment instructions are optimized to best work on **<Amazon Linux 2 AMI>**.  Deployment in another OS may require additional steps.”
+```
+USAGE
+  $ sif core switch [-c <value> | [-r <value> | -b <value> | ] | ]
 
-- Include install commands for packages, if applicable.
+FLAGS
+  -b, --branch=<value>    SIF repository branch
+  -c, --commitId=<value>  SIF revision commit hash
+  -r, --release=<value>   SIF release version
 
+DESCRIPTION
+  Switch the local SIF repository to the specified RELEASE, BRANCH or COMMIT ID
 
-### Third-party tools (If applicable)
+EXAMPLES
+  $ sif core switch -b main
 
-*List any installable third-party tools required for deployment.*
+  $ sif core switch -c ead2b1d
 
+  $ sif core switch -r v1.7.1
 
-### AWS account requirements (If applicable)
+  $ sif core switch -r LATEST
+```
 
-*List out pre-requisites required on the AWS account if applicable, this includes enabling AWS regions, requiring ACM certificate.*
+_See code: [dist/commands/core/switch.ts](https://github.com/aws-solutions-library-sample/sif-cli/blob/v0.1.0/dist/commands/core/switch.ts)_
 
-**Example:** “This deployment requires you have public ACM certificate available in your AWS account”
+## `sif core version`
 
-**Example resources:**
-- ACM certificate 
-- DNS record
-- S3 bucket
-- VPC
-- IAM role with specific permissions
-- Enabling a Region or service etc.
+Print the release tag currently checked out. If there is no release tag, show the branch and commit id
 
+```
+USAGE
+  $ sif core version [--json]
 
-### aws cdk bootstrap (if sample code has aws-cdk)
+GLOBAL FLAGS
+  --json  Format output as json.
 
-<If using aws-cdk, include steps for account bootstrap for new cdk users.>
+DESCRIPTION
+  Print the release tag currently checked out. If there is no release tag, show the branch and commit id
 
-**Example blurb:** “This Guidance uses aws-cdk. If you are using aws-cdk for first time, please perform the below bootstrapping....”
+EXAMPLES
+  $ sif core version
+```
 
-### Service limits  (if applicable)
+_See code: [dist/commands/core/version.ts](https://github.com/aws-solutions-library-sample/sif-cli/blob/v0.1.0/dist/commands/core/version.ts)_
 
-<Talk about any critical service limits that affect the regular functioning of the Guidance. If the Guidance requires service limit increase, include the service name, limit name and link to the service quotas page.>
+## `sif environment configure`
 
-### Supported Regions (if applicable)
+Modify SIF configuration for the specified environment
 
-<If the Guidance is built for specific AWS Regions, or if the services used in the Guidance do not support all Regions, please specify the Region this Guidance is best suited for>
+```
+USAGE
+  $ sif environment configure -e <value> [-r <value>] [--json] [-h -c <value>]
 
+FLAGS
+  -c, --config=<value>       Path to configuration file used for deployment
+  -e, --environment=<value>  (required) An environment represents an isolated deployment of tenantId(s)
+  -h, --headless             If provided, you also need to specify the path configuration file using -c
+  -r, --region=<value>       AWS region used when running the subcommands
 
-## Deployment Steps (required)
+GLOBAL FLAGS
+  --json  Format output as json.
 
-Deployment steps must be numbered, comprehensive, and usable to customers at any level of AWS expertise. The steps must include the precise commands to run, and describe the action it performs.
+DESCRIPTION
+  Modify SIF configuration for the specified environment
 
-* All steps must be numbered.
-* If the step requires manual actions from the AWS console, include a screenshot if possible.
-* The steps must start with the following command to clone the repo. ```git clone xxxxxxx```
-* If applicable, provide instructions to create the Python virtual environment, and installing the packages using ```requirement.txt```.
-* If applicable, provide instructions to capture the deployed resource ARN or ID using the CLI command (recommended), or console action.
+EXAMPLES
+  $ sif environment configure -e stage
 
- 
-**Example:**
+  $ sif environment configure -e stage -h -c <PATH_TO_CONFIG_FILE>
+```
 
-1. Clone the repo using command ```git clone xxxxxxxxxx```
-2. cd to the repo folder ```cd <repo-name>```
-3. Install packages in requirements using command ```pip install requirement.txt```
-4. Edit content of **file-name** and replace **s3-bucket** with the bucket name in your account.
-5. Run this command to deploy the stack ```cdk deploy``` 
-6. Capture the domain name created by running this CLI command ```aws apigateway ............```
+_See code: [dist/commands/environment/configure.ts](https://github.com/aws-solutions-library-sample/sif-cli/blob/v0.1.0/dist/commands/environment/configure.ts)_
 
+## `sif environment delete`
 
+Delete SIF environment
 
-## Deployment Validation  (required)
+```
+USAGE
+  $ sif environment delete -e <value> [-r <value>] [--json] [-f]
 
-<Provide steps to validate a successful deployment, such as terminal output, verifying that the resource is created, status of the CloudFormation template, etc.>
+FLAGS
+  -e, --environment=<value>  (required) An environment represents an isolated deployment of tenantId(s)
+  -f, --force                If specified, will also delete all tenants on the environment
+  -r, --region=<value>       AWS region used when running the subcommands
 
+GLOBAL FLAGS
+  --json  Format output as json.
 
-**Examples:**
+DESCRIPTION
+  Delete SIF environment
 
-* Open CloudFormation console and verify the status of the template with the name starting with xxxxxx.
-* If deployment is successful, you should see an active database instance with the name starting with <xxxxx> in        the RDS console.
-*  Run the following CLI command to validate the deployment: ```aws cloudformation describe xxxxxxxxxxxxx```
+EXAMPLES
+  $ sif environment delete -e stage
 
+  $ sif environment delete -e stage --force
+```
 
+_See code: [dist/commands/environment/delete.ts](https://github.com/aws-solutions-library-sample/sif-cli/blob/v0.1.0/dist/commands/environment/delete.ts)_
 
-## Running the Guidance (required)
+## `sif environment install`
 
-<Provide instructions to run the Guidance with the sample data or input provided, and interpret the output received.> 
+Install SIF for the specified environment
 
-This section should include:
+```
+USAGE
+  $ sif environment install -e <value> [-r <value>] [--json] [-h -c <value>]
 
-* Guidance inputs
-* Commands to run
-* Expected output (provide screenshot if possible)
-* Output description
+FLAGS
+  -c, --config=<value>       Path to configuration file used for environment upgrade
+  -e, --environment=<value>  (required) An environment represents an isolated deployment of tenantId(s)
+  -h, --headless             Perform SIF environment upgrade in headless mode, if specified you also need to specify the
+                             configuration file
+  -r, --region=<value>       AWS region used when running the subcommands
 
+GLOBAL FLAGS
+  --json  Format output as json.
 
+DESCRIPTION
+  Install SIF for the specified environment
 
-## Next Steps (required)
+EXAMPLES
+  $ sif environment install -e stage
 
-Provide suggestions and recommendations about how customers can modify the parameters and the components of the Guidance to further enhance it according to their requirements.
+  $ sif environment install -e stage -h -c <PATH_TO_CONFIG_FILE>
+```
 
+_See code: [dist/commands/environment/install.ts](https://github.com/aws-solutions-library-sample/sif-cli/blob/v0.1.0/dist/commands/environment/install.ts)_
 
-## Cleanup (required)
+## `sif environment list`
 
-- Include detailed instructions, commands, and console actions to delete the deployed Guidance.
-- If the Guidance requires manual deletion of resources, such as the content of an S3 bucket, please specify.
+List SIF installed environments
 
+```
+USAGE
+  $ sif environment list [-r <value>] [--json]
 
+FLAGS
+  -r, --region=<value>  AWS region used when running the subcommands
 
-## FAQ, known issues, additional considerations, and limitations (optional)
+GLOBAL FLAGS
+  --json  Format output as json.
 
+DESCRIPTION
+  List SIF installed environments
 
-**Known issues (optional)**
+EXAMPLES
+  $ sif environment list
+```
 
-<If there are common known issues, or errors that can occur during the Guidance deployment, describe the issue and resolution steps here>
+_See code: [dist/commands/environment/list.ts](https://github.com/aws-solutions-library-sample/sif-cli/blob/v0.1.0/dist/commands/environment/list.ts)_
 
+## `sif environment upgrade`
 
-**Additional considerations (if applicable)**
+Perform upgrade of SIF environment version
 
-<Include considerations the customer must know while using the Guidance, such as anti-patterns, or billing considerations.>
+```
+USAGE
+  $ sif environment upgrade -e <value> [-r <value>] [--json] [-u <value>] [-h -c <value>]
 
-**Examples:**
+FLAGS
+  -c, --config=<value>          Path to configuration file used for environment upgrade
+  -e, --environment=<value>     (required) An environment represents an isolated deployment of tenantId(s)
+  -h, --headless                Perform SIF environment upgrade in headless mode, if specified you also need to specify
+                                the configuration file
+  -r, --region=<value>          AWS region used when running the subcommands
+  -u, --upgradeTenants=<value>  Upgrade all tenants to match the local version
 
-- “This Guidance creates a public AWS bucket required for the use-case.”
-- “This Guidance created an Amazon SageMaker notebook that is billed per hour irrespective of usage.”
-- “This Guidance creates unauthenticated public API endpoints.”
+GLOBAL FLAGS
+  --json  Format output as json.
 
+DESCRIPTION
+  Perform upgrade of SIF environment version
 
-Provide a link to the *GitHub issues page* for users to provide feedback.
+EXAMPLES
+  $ sif environment upgrade -e stage
 
+  $ sif environment upgrade -e stage -h -c <PATH_TO_CONFIG_FILE>
+```
 
-**Example:** *“For any feedback, questions, or suggestions, please use the issues tab under this repo.”*
+_See code: [dist/commands/environment/upgrade.ts](https://github.com/aws-solutions-library-sample/sif-cli/blob/v0.1.0/dist/commands/environment/upgrade.ts)_
 
-## Revisions (optional)
+## `sif environment version`
 
-Document all notable changes to this project.
+Return the version of deployed environment
 
-Consider formatting this section based on Keep a Changelog, and adhering to Semantic Versioning.
+```
+USAGE
+  $ sif environment version -e <value> [-r <value>] [--json]
 
-## Notices (optional)
+FLAGS
+  -e, --environment=<value>  (required) An environment represents an isolated deployment of tenantId(s)
+  -r, --region=<value>       AWS region used when running the subcommands
 
-Include a legal disclaimer
+GLOBAL FLAGS
+  --json  Format output as json.
 
-**Example:**
-*Customers are responsible for making their own independent assessment of the information in this Guidance. This Guidance: (a) is for informational purposes only, (b) represents AWS current product offerings and practices, which are subject to change without notice, and (c) does not create any commitments or assurances from AWS and its affiliates, suppliers or licensors. AWS products or services are provided “as is” without warranties, representations, or conditions of any kind, whether express or implied. AWS responsibilities and liabilities to its customers are controlled by AWS agreements, and this Guidance is not part of, nor does it modify, any agreement between AWS and its customers.*
+DESCRIPTION
+  Return the version of deployed environment
 
+EXAMPLES
+  $ sif environment version -e stage
+```
 
-## Authors (optional)
+_See code: [dist/commands/environment/version.ts](https://github.com/aws-solutions-library-sample/sif-cli/blob/v0.1.0/dist/commands/environment/version.ts)_
 
-Name of code contributors
+## `sif help [COMMANDS]`
+
+Display help for sif.
+
+```
+USAGE
+  $ sif help [COMMANDS] [-n]
+
+ARGUMENTS
+  COMMANDS  Command to show help for.
+
+FLAGS
+  -n, --nested-commands  Include all nested commands in the output.
+
+DESCRIPTION
+  Display help for sif.
+```
+
+_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v5.2.17/src/commands/help.ts)_
+
+## `sif init`
+
+Install SIF dependencies
+
+```
+USAGE
+  $ sif init
+
+DESCRIPTION
+  Install SIF dependencies
+
+EXAMPLES
+  $ sif init
+```
+
+_See code: [dist/commands/init/index.ts](https://github.com/aws-solutions-library-sample/sif-cli/blob/v0.1.0/dist/commands/init/index.ts)_
+
+## `sif instance auth`
+
+Walks the user through the authentication process to get a JWT token to be used for API calls.
+
+```
+USAGE
+  $ sif instance auth -e <value> -t <value> -u <value> -p <value> -g <value> [-r <value>]
+
+FLAGS
+  -e, --environment=<value>  (required) The environment to authenticate against
+  -g, --groupId=<value>      (required) [default: /] The groupId for the token
+  -p, --password=<value>     (required) The password of the user
+  -r, --region=<value>       AWS region used when running the subcommands
+  -t, --tenantId=<value>     (required) The id of the tenant to authenticate against
+  -u, --username=<value>     (required) The username to generate the token for
+
+DESCRIPTION
+  Walks the user through the authentication process to get a JWT token to be used for API calls.
+
+EXAMPLES
+  $ sif instance auth -t demo -e prod -r us-west-2 -a 1234567
+```
+
+_See code: [dist/commands/instance/auth.ts](https://github.com/aws-solutions-library-sample/sif-cli/blob/v0.1.0/dist/commands/instance/auth.ts)_
+
+## `sif instance configure`
+
+Redeploys the same instance version.
+
+```
+USAGE
+  $ sif instance configure -e <value> -t <value> [-r <value>] [-h -c <value>]
+
+FLAGS
+  -c, --config=<value>       Path to configuration file used for deployment
+  -e, --environment=<value>  (required) The environment to redeploy the same instance version to
+  -h, --headless             If provided, bypass the questions. You will also need to specify the path configuration
+                             file using -c
+  -r, --region=<value>       AWS region used when running the subcommands
+  -t, --tenantId=<value>     (required) The id of the tenant to redeploy
+
+DESCRIPTION
+  Redeploys the same instance version.
+
+EXAMPLES
+  $ sif instance configure -t demo -e prod -r us-west-2
+```
+
+_See code: [dist/commands/instance/configure.ts](https://github.com/aws-solutions-library-sample/sif-cli/blob/v0.1.0/dist/commands/instance/configure.ts)_
+
+## `sif instance delete`
+
+Delete the sif tenant.
+
+```
+USAGE
+  $ sif instance delete -e <value> -t <value> [-r <value>]
+
+FLAGS
+  -e, --environment=<value>  (required) The environment to delete the tenant from
+  -r, --region=<value>       AWS region used when running the subcommands
+  -t, --tenantId=<value>     (required) The id of the tenant to delete
+
+DESCRIPTION
+  Delete the sif tenant.
+```
+
+_See code: [dist/commands/instance/delete.ts](https://github.com/aws-solutions-library-sample/sif-cli/blob/v0.1.0/dist/commands/instance/delete.ts)_
+
+## `sif instance insomnia`
+
+Walks the user through the process to generate the insomnia environment file.
+
+```
+USAGE
+  $ sif instance insomnia -e <value> -t <value> [-r <value>]
+
+FLAGS
+  -e, --environment=<value>  (required) The environment used to generate the insomnia environment file
+  -r, --region=<value>       AWS region used when running the subcommands
+  -t, --tenantId=<value>     (required) The id of the tenant used to generate the insomnia environment file
+
+DESCRIPTION
+  Walks the user through the process to generate the insomnia environment file.
+```
+
+_See code: [dist/commands/instance/insomnia.ts](https://github.com/aws-solutions-library-sample/sif-cli/blob/v0.1.0/dist/commands/instance/insomnia.ts)_
+
+## `sif instance install`
+
+Walks the user through an interactive list of questions needed to deploy sif core.
+
+```
+USAGE
+  $ sif instance install -e <value> -t <value> [-r <value>] [-h -c <value>]
+
+FLAGS
+  -c, --config=<value>       Path to configuration file used for deployment
+  -e, --environment=<value>  (required) The environment to deploy the tenant to
+  -h, --headless             If provided, bypass the questions. You will also need to specify the path configuration
+                             file using -c
+  -r, --region=<value>       AWS region used when running the subcommands
+  -t, --tenantId=<value>     (required) The id of the tenant to deploy
+
+DESCRIPTION
+  Walks the user through an interactive list of questions needed to deploy sif core.
+
+EXAMPLES
+  $ sif instance install -t demo -e prod -r us-west-2
+```
+
+_See code: [dist/commands/instance/install.ts](https://github.com/aws-solutions-library-sample/sif-cli/blob/v0.1.0/dist/commands/instance/install.ts)_
+
+## `sif instance list`
+
+Lists all deployed tenants within a specific environment
+
+```
+USAGE
+  $ sif instance list -e <value> [-r <value>]
+
+FLAGS
+  -e, --environment=<value>  (required) An environment represents an isolated deployment of tenantId(s)
+  -r, --region=<value>       Region used for listing of sif tenants
+
+DESCRIPTION
+  Lists all deployed tenants within a specific environment
+
+EXAMPLES
+  $ sif instance list -t demo -e prod -r us-west-2 -a 1234567
+```
+
+_See code: [dist/commands/instance/list.ts](https://github.com/aws-solutions-library-sample/sif-cli/blob/v0.1.0/dist/commands/instance/list.ts)_
+
+## `sif instance postman`
+
+Walks the user through the process to generate the postman environment file.
+
+```
+USAGE
+  $ sif instance postman -e <value> -t <value> [-r <value>]
+
+FLAGS
+  -e, --environment=<value>  (required) The environment used to generate the postman environment file
+  -r, --region=<value>       AWS region used when running the subcommands
+  -t, --tenantId=<value>     (required) The tenantId used to generate the postman environment file
+
+DESCRIPTION
+  Walks the user through the process to generate the postman environment file.
+
+EXAMPLES
+  $ sif instance postman -t demo -e prod -r us-west-2 -a 1234567
+```
+
+_See code: [dist/commands/instance/postman.ts](https://github.com/aws-solutions-library-sample/sif-cli/blob/v0.1.0/dist/commands/instance/postman.ts)_
+
+## `sif instance start`
+
+Run the selected SIF module locally
+
+```
+USAGE
+  $ sif instance start -e <value> -t <value> -m <value> [-r <value>]
+
+FLAGS
+  -e, --environment=<value>  (required) SIF environment to use for starting the module
+  -m, --module=<value>       (required) SIF module to run
+  -r, --region=<value>       AWS region used when running the subcommands
+  -t, --tenantId=<value>     (required) SIF tenantId to use for starting the module
+
+DESCRIPTION
+  Run the selected SIF module locally
+
+EXAMPLES
+  $ sif instance start -m pipelines
+```
+
+_See code: [dist/commands/instance/start.ts](https://github.com/aws-solutions-library-sample/sif-cli/blob/v0.1.0/dist/commands/instance/start.ts)_
+
+## `sif instance upgrade`
+
+Perform upgrade of SIF instance version
+
+```
+USAGE
+  $ sif instance upgrade -e <value> -t <value> [-r <value>] [-h -c <value>]
+
+FLAGS
+  -c, --config=<value>       Path to configuration file used for upgrade
+  -e, --environment=<value>  (required) The environment to upgrade the tenant for
+  -h, --headless             If provided, bypass the questions. You will also need to specify the path configuration
+                             file using -c
+  -r, --region=<value>       AWS region used when running the subcommands
+  -t, --tenantId=<value>     (required) The id of the tenant to upgrade
+
+DESCRIPTION
+  Perform upgrade of SIF instance version
+
+EXAMPLES
+  $ sif instance upgrade -t demo -e prod -r us-west-2 -a 1234567
+```
+
+_See code: [dist/commands/instance/upgrade.ts](https://github.com/aws-solutions-library-sample/sif-cli/blob/v0.1.0/dist/commands/instance/upgrade.ts)_
+
+## `sif plugins`
+
+List installed plugins.
+
+```
+USAGE
+  $ sif plugins [--json] [--core]
+
+FLAGS
+  --core  Show core plugins.
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  List installed plugins.
+
+EXAMPLES
+  $ sif plugins
+```
+
+_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v3.2.6/src/commands/plugins/index.ts)_
+
+## `sif plugins:install PLUGIN...`
+
+Installs a plugin into the CLI.
+
+```
+USAGE
+  $ sif plugins:install PLUGIN...
+
+ARGUMENTS
+  PLUGIN  Plugin to install.
+
+FLAGS
+  -f, --force    Run yarn install with force flag.
+  -h, --help     Show CLI help.
+  -v, --verbose
+
+DESCRIPTION
+  Installs a plugin into the CLI.
+  Can be installed from npm or a git url.
+
+  Installation of a user-installed plugin will override a core plugin.
+
+  e.g. If you have a core plugin that has a 'hello' command, installing a user-installed plugin with a 'hello' command
+  will override the core plugin implementation. This is useful if a user needs to update core plugin functionality in
+  the CLI without the need to patch and update the whole CLI.
+
+
+ALIASES
+  $ sif plugins add
+
+EXAMPLES
+  $ sif plugins:install myplugin
+
+  $ sif plugins:install https://github.com/someuser/someplugin
+
+  $ sif plugins:install someuser/someplugin
+```
+
+## `sif plugins:inspect PLUGIN...`
+
+Displays installation properties of a plugin.
+
+```
+USAGE
+  $ sif plugins:inspect PLUGIN...
+
+ARGUMENTS
+  PLUGIN  [default: .] Plugin to inspect.
+
+FLAGS
+  -h, --help     Show CLI help.
+  -v, --verbose
+
+GLOBAL FLAGS
+  --json  Format output as json.
+
+DESCRIPTION
+  Displays installation properties of a plugin.
+
+EXAMPLES
+  $ sif plugins:inspect myplugin
+```
+
+_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v3.2.6/src/commands/plugins/inspect.ts)_
+
+## `sif plugins:install PLUGIN...`
+
+Installs a plugin into the CLI.
+
+```
+USAGE
+  $ sif plugins:install PLUGIN...
+
+ARGUMENTS
+  PLUGIN  Plugin to install.
+
+FLAGS
+  -f, --force    Run yarn install with force flag.
+  -h, --help     Show CLI help.
+  -v, --verbose
+
+DESCRIPTION
+  Installs a plugin into the CLI.
+  Can be installed from npm or a git url.
+
+  Installation of a user-installed plugin will override a core plugin.
+
+  e.g. If you have a core plugin that has a 'hello' command, installing a user-installed plugin with a 'hello' command
+  will override the core plugin implementation. This is useful if a user needs to update core plugin functionality in
+  the CLI without the need to patch and update the whole CLI.
+
+
+ALIASES
+  $ sif plugins add
+
+EXAMPLES
+  $ sif plugins:install myplugin
+
+  $ sif plugins:install https://github.com/someuser/someplugin
+
+  $ sif plugins:install someuser/someplugin
+```
+
+_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v3.2.6/src/commands/plugins/install.ts)_
+
+## `sif plugins:link PLUGIN`
+
+Links a plugin into the CLI for development.
+
+```
+USAGE
+  $ sif plugins:link PLUGIN
+
+ARGUMENTS
+  PATH  [default: .] path to plugin
+
+FLAGS
+  -h, --help     Show CLI help.
+  -v, --verbose
+
+DESCRIPTION
+  Links a plugin into the CLI for development.
+  Installation of a linked plugin will override a user-installed or core plugin.
+
+  e.g. If you have a user-installed or core plugin that has a 'hello' command, installing a linked plugin with a 'hello'
+  command will override the user-installed or core plugin implementation. This is useful for development work.
+
+
+EXAMPLES
+  $ sif plugins:link myplugin
+```
+
+_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v3.2.6/src/commands/plugins/link.ts)_
+
+## `sif plugins:uninstall PLUGIN...`
+
+Removes a plugin from the CLI.
+
+```
+USAGE
+  $ sif plugins:uninstall PLUGIN...
+
+ARGUMENTS
+  PLUGIN  plugin to uninstall
+
+FLAGS
+  -h, --help     Show CLI help.
+  -v, --verbose
+
+DESCRIPTION
+  Removes a plugin from the CLI.
+
+ALIASES
+  $ sif plugins unlink
+  $ sif plugins remove
+```
+
+## `sif plugins:uninstall PLUGIN...`
+
+Removes a plugin from the CLI.
+
+```
+USAGE
+  $ sif plugins:uninstall PLUGIN...
+
+ARGUMENTS
+  PLUGIN  plugin to uninstall
+
+FLAGS
+  -h, --help     Show CLI help.
+  -v, --verbose
+
+DESCRIPTION
+  Removes a plugin from the CLI.
+
+ALIASES
+  $ sif plugins unlink
+  $ sif plugins remove
+```
+
+_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v3.2.6/src/commands/plugins/uninstall.ts)_
+
+## `sif plugins:uninstall PLUGIN...`
+
+Removes a plugin from the CLI.
+
+```
+USAGE
+  $ sif plugins:uninstall PLUGIN...
+
+ARGUMENTS
+  PLUGIN  plugin to uninstall
+
+FLAGS
+  -h, --help     Show CLI help.
+  -v, --verbose
+
+DESCRIPTION
+  Removes a plugin from the CLI.
+
+ALIASES
+  $ sif plugins unlink
+  $ sif plugins remove
+```
+
+## `sif plugins update`
+
+Update installed plugins.
+
+```
+USAGE
+  $ sif plugins update [-h] [-v]
+
+FLAGS
+  -h, --help     Show CLI help.
+  -v, --verbose
+
+DESCRIPTION
+  Update installed plugins.
+```
+
+_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v3.2.6/src/commands/plugins/update.ts)_
+<!-- commandsstop -->
