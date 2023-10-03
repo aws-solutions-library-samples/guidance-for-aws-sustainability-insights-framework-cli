@@ -20,7 +20,7 @@
     "@aws-sdk/client-cloudformation": "3.398.0",
     "@aws-sdk/client-ssm": "3.398.0",
     "@aws-sdk/client-sts": "3.398.0",
-    "@aws-sdk/credential-provider-node": "3.398.0",
+    "@aws-sdk/credential-provider-node": "3.423.0",
     "@inquirer/prompts": "^3.0.3",
     "@inquirer/select": "^1.2.8",
     "@microsoft/rush": "^5.82.1",
