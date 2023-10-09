@@ -1,11 +1,8 @@
 sif-cli
 =================
+**The SIF Command Line Interface (sif-cli)** is an open-source tool that empowers you to interact with SIF components through commands in your command-line shell. With minimal configuration, `sif-cli` simplifies many of the complexities associated with managing SIF. Additionally, it incorporates various functionalities to ensure compatibility between your deployed version and the latest release of SIF.
 
-CLI to interact with Sustainability Insight Framework
-
-[![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
-[![CircleCI](https://circleci.com/gh/oclif/hello-world/tree/main.svg?style=shield)](https://circleci.com/gh/oclif/hello-world/tree/main)
-[![GitHub license](https://img.shields.io/github/license/oclif/hello-world)](https://github.com/oclif/hello-world/blob/main/LICENSE)
+Refer to the [SIF Repository](https://github.com/aws-solutions-library-samples/guidance-for-aws-sustainability-insights-framework/tree/main/docs/deployment/cli_walkthrough.md) for a detailed walkthrough.
 
 <!-- toc -->
 * [Usage](#usage)
