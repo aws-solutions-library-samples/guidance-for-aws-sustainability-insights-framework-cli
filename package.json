@@ -37,7 +37,7 @@
     "octokit": "^3.1.0",
     "promisify": "^0.0.3",
     "shelljs": "^0.8.5",
-    "simple-git": "^3.19.1",
+    "simple-git": "^3.20.0",
     "table": "^6.8.1",
     "ulid": "2.3.0"
   },
