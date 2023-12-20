@@ -17,55 +17,63 @@ import { getAnswers, saveAnswers } from "../../utils/answers";
 import { DeploymentCommand } from "../../types/deploymentCommand";
 import { switchToPlatformLocation } from "../../utils/shell";
 import { getDeployedStackByName } from "../../utils/github";
+import { generateEnvironmentDeploymentFlags } from "../../utils/help";
+import { Command } from "@oclif/core/lib/command";
 
-const { SILENT_COMMAND_EXECUTION:isSilentStr } = process.env;
-const isSilent = (isSilentStr) ? isSilentStr === "true": true ;
+const { SILENT_COMMAND_EXECUTION: isSilentStr } = process.env;
+const isSilent = (isSilentStr) ? isSilentStr === "true" : true;
+
 export class EnvironmentInstall extends DeploymentCommand<typeof EnvironmentInstall> {
-    public static description = "Install SIF for the specified environment";
-    public static examples = [
-        "$ <%= config.bin %> <%= command.id %> -e stage",
-        "$ <%= config.bin %> <%= command.id %> -e stage -h -c <PATH_TO_CONFIG_FILE>",
-    ];
-    public static enableJsonFlag = true;
+	public static description = "Install SIF for the specified environment";
+	public static examples = [
+		"$ <%= config.bin %> <%= command.id %> -e stage",
+		"$ <%= config.bin %> <%= command.id %> -e stage -h -c <PATH_TO_CONFIG_FILE>",
+	];
+	public static enableJsonFlag = true;
 
-    public static flags = {
-        environment: Flags.string(
-            {
-                char: "e",
-                required: true,
-                description: "An environment represents an isolated deployment of tenantId(s)",
-            }
-        ),
-        headless: Flags.boolean(
-            {
-                char: "h",
-                description: "Perform SIF environment upgrade in headless mode, if specified you also need to specify the configuration file",
-                dependsOn: ["config"]
-            }
-        ),
-        config: Flags.string(
-            {
-                char: "c",
-                description: "Path to configuration file used for environment upgrade",
-            }
-        )
-    };
+	public static flags = {
+		...this.baseFlags,
+		environment: Flags.string(
+			{
+				char: "e",
+				required: true,
+				description: "An environment represents an isolated deployment of tenantId(s)",
+			}
+		),
+		headless: Flags.boolean(
+			{
+				char: "h",
+				description: "Perform SIF environment upgrade in headless mode, if specified you also need to specify the configuration file",
+				dependsOn: ["config"]
+			}
+		),
+		config: Flags.string(
+			{
+				char: "c",
+				description: "Path to configuration file used for environment upgrade",
+			}
+		)
+	};
 
-    public async runChild(): Promise<Record<string, unknown>> {
-        const { flags } = await this.parse(EnvironmentInstall);
-        const folder = await switchToPlatformLocation();
-        const answers = await getAnswers(folder, flags, global.platformPackage.retrieveDeploymentContextFromArgs(flags));
-        await saveAnswers(flags.environment, answers, folder, undefined, flags?.role);
+	protected override generateFlags(): Record<string, Command.Flag> {
+		return generateEnvironmentDeploymentFlags();
+	}
 
-		try{
+	public async runChild(): Promise<Record<string, unknown>> {
+		const { flags } = await this.parse(EnvironmentInstall);
+		const folder = await switchToPlatformLocation();
+		const answers = await getAnswers(folder, flags, global.platformPackage.retrieveDeploymentContextFromArgs(flags));
+		await saveAnswers(flags.environment, answers, folder, undefined, flags?.role);
+
+		try {
 			await getDeployedStackByName("CDKToolkit", flags?.role);
 		} catch (error) {
-			if((error as Error).message === "Stack with id CDKToolkit does not exist"){
-				shelljs.exec(`npm run cdk -- bootstrap -c environment=${flags.environment} --require-approval never ${(flags?.role)? "--r "+ flags.role : "" }`, { silent:isSilent } );
+			if ((error as Error).message === "Stack with id CDKToolkit does not exist") {
+				shelljs.exec(`npm run cdk -- bootstrap -c environment=${flags.environment} --require-approval never ${(flags?.role) ? "--r " + flags.role : ""}`, { silent: isSilent });
 			}
 		}
 
-        shelljs.exec(`npm run cdk -- deploy -c environment=${flags.environment} --require-approval never ${(flags?.role)? "--r "+ flags.role : "" }`, { silent:isSilent } );
-        return answers;
-    }
+		shelljs.exec(`npm run cdk -- deploy -c environment=${flags.environment} --require-approval never ${(flags?.role) ? "--r " + flags.role : ""}`, { silent: isSilent });
+		return answers;
+	}
 }

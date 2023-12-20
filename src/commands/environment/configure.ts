@@ -17,6 +17,8 @@ import { getAnswers, getSavedAnswers, saveAnswers } from "../../utils/answers";
 import { getDeployedEnvironment, getLocalRepositoryVersion } from "../../utils/github";
 import { DeploymentCommand } from "../../types/deploymentCommand";
 import { switchToPlatformLocation } from "../../utils/shell";
+import { generateEnvironmentDeploymentFlags } from "../../utils/help";
+import { Command } from "@oclif/core/lib/command";
 
 export class EnvironmentConfigure extends DeploymentCommand<typeof EnvironmentConfigure> {
 	public static description = "Modify SIF configuration for the specified environment";
@@ -27,6 +29,7 @@ export class EnvironmentConfigure extends DeploymentCommand<typeof EnvironmentCo
 	public static enableJsonFlag = true;
 
 	public static flags = {
+		...this.baseFlags,
 		environment: Flags.string(
 			{
 				char: "e",
@@ -51,22 +54,25 @@ export class EnvironmentConfigure extends DeploymentCommand<typeof EnvironmentCo
 
 	public static strict = true;
 
+	protected override generateFlags(): Record<string, Command.Flag> {
+		return generateEnvironmentDeploymentFlags();
+	}
 
 	public async runChild(): Promise<Record<string, any>> {
 		const { flags } = await this.parse(EnvironmentConfigure);
 
-		const { tag: remoteTag } = await getDeployedEnvironment(flags.environment, undefined ,flags?.role);
+		const { tag: remoteTag } = await getDeployedEnvironment(flags.environment, undefined, flags?.role);
 		const { tag: localTag } = await getLocalRepositoryVersion();
 		if (remoteTag !== localTag) {
 			this.error(`local repository tag ${localTag} does not match deployed tag ${remoteTag}`);
 		}
 
 		const folder = await switchToPlatformLocation();
-		const savedAnswers = await getSavedAnswers(flags.environment, global.platformPackage.retrieveDeploymentContextFromArgs(flags), undefined, flags?.role );
+		const savedAnswers = await getSavedAnswers(flags.environment, global.platformPackage.retrieveDeploymentContextFromArgs(flags), undefined, flags?.role);
 		const answers = await getAnswers(folder, flags, savedAnswers);
 		await saveAnswers(flags.environment, answers, folder, undefined, flags?.role);
 
-		shelljs.exec(`npm run cdk -- deploy -c environment=${flags.environment} --require-approval never ${(flags?.role)? "--r "+ flags.role : "" }`);
+		shelljs.exec(`npm run cdk -- deploy -c environment=${flags.environment} --require-approval never ${(flags?.role) ? "--r " + flags.role : ""}`);
 		return answers;
 	}
 }

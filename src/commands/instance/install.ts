@@ -14,12 +14,15 @@
 import { Flags } from "@oclif/core";
 import shelljs from "shelljs";
 import * as rushlib from "@microsoft/rush-lib";
-import { getAnswers, saveAnswers } from "../../utils/answers";;
+import { getAnswers, saveAnswers } from "../../utils/answers";
 import { DeploymentCommand } from "../../types/deploymentCommand";
+import { Command } from "@oclif/core/lib/command";
+import { generateInstanceDeploymentFlags } from "../../utils/help";
 
 export class InstanceInstall extends DeploymentCommand<typeof InstanceInstall> {
 	public static description = "Walks the user through an interactive list of questions needed to deploy sif core.";
 	public static flags = {
+		...this.baseFlags,
 		environment: Flags.string(
 			{
 				char: "e",
@@ -54,6 +57,9 @@ export class InstanceInstall extends DeploymentCommand<typeof InstanceInstall> {
 		"<%= config.bin %> <%= command.id %> -t demo -e prod -r us-west-2",
 	];
 
+	protected override generateFlags(): Record<string, Command.Flag> {
+		return generateInstanceDeploymentFlags();
+	}
 
 	public async runChild(): Promise<Record<string, any>> {
 
@@ -70,9 +76,9 @@ export class InstanceInstall extends DeploymentCommand<typeof InstanceInstall> {
 		const answers = await getAnswers(moduleConfiguration.projectFolder, flags, global.tenantPackage.retrieveDeploymentContextFromArgs(flags));
 		await saveAnswers(flags.environment, answers, moduleConfiguration.projectFolder, flags.tenantId, flags?.role);
 
-		const params =  `-c environment=${flags.environment} -c tenantId=${flags.tenantId}`;
+		const params = `-c environment=${flags.environment} -c tenantId=${flags.tenantId}`;
 		shelljs.cd(moduleConfiguration.projectFolder);
-		shelljs.exec(`npm run cdk -- deploy --all --concurrency=10  --require-approval never ${(flags?.role)? "--r "+ flags.role : "" } ${params}`);
+		shelljs.exec(`npm run cdk -- deploy --all --concurrency=10  --require-approval never ${(flags?.role) ? "--r " + flags.role : ""} ${params}`);
 		return answers;
 
 	}

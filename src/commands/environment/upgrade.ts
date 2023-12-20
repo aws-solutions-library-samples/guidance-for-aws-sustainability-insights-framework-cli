@@ -18,6 +18,8 @@ import { getDeployedEnvironment, getLocalRepositoryVersion } from "../../utils/g
 import { compareVersions } from "compare-versions";
 import { DeploymentCommand } from "../../types/deploymentCommand";
 import { switchToPlatformLocation } from "../../utils/shell";
+import { generateEnvironmentDeploymentFlags } from "../../utils/help";
+import { Command } from "@oclif/core/lib/command";
 
 export class EnvironmentUpgrade extends DeploymentCommand<typeof EnvironmentUpgrade> {
     public static description = "Perform upgrade of SIF environment version";
@@ -28,6 +30,7 @@ export class EnvironmentUpgrade extends DeploymentCommand<typeof EnvironmentUpgr
     public static enableJsonFlag = true;
 
     public static flags = {
+		...this.baseFlags,
         environment: Flags.string(
             {
                 char: "e",
@@ -57,7 +60,9 @@ export class EnvironmentUpgrade extends DeploymentCommand<typeof EnvironmentUpgr
         )
     };
 
-
+	protected override generateFlags(): Record<string, Command.Flag> {
+		return generateEnvironmentDeploymentFlags();
+	}
 
     public async runChild(): Promise<Record<string, any>> {
         const { flags } = await this.parse(EnvironmentUpgrade);

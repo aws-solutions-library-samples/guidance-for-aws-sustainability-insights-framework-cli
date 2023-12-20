@@ -19,6 +19,7 @@ import { DeploymentCommand } from "../../types/deploymentCommand";
 export class InstanceInsomnia extends DeploymentCommand<typeof InstanceInsomnia> {
 	public static description = "Walks the user through the process to generate the insomnia environment file.";
 	public static flags = {
+		...this.baseFlags,
 		environment: Flags.string(
 			{
 				char: "e",

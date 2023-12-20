@@ -14,58 +14,64 @@
 import { Command, CommandHelp, Help, Flags } from "@oclif/core";
 import Flag = Command.Flag;
 
-const generateVersionSpecificFlags = (type: "platform" | "tenant"): Record<string, Flag> => {
-    const convertToFlags = (prev, curr) => {
-        const { type, ...rest } = curr[1];
-        switch (type) {
-            case "number":
-            case "string":
-                prev[curr[0]] = Flags.string(rest);
-                break;
-            case "boolean":
-                prev[curr[0]] = Flags.boolean(rest);
-                break;
-        }
-        return prev;
-    };
-    let extraFlags = {};
 
-    if (type === "platform" && global.platformPackage?.deploymentContextArgs) {
-        extraFlags = Object.entries(global.platformPackage.deploymentContextArgs).reduce(convertToFlags, {});
-    }
-    if (type === "tenant" && global.tenantPackage?.deploymentContextArgs) {
-        extraFlags = Object.entries(global.tenantPackage.deploymentContextArgs).reduce(convertToFlags, {});
-    }
+const convertToFlags = (prev, curr) => {
+	const { type, ...rest } = curr[1];
+	switch (type) {
+		case "number":
+		case "string":
+			prev[curr[0]] = Flags.string(rest);
+			break;
+		case "boolean":
+			prev[curr[0]] = Flags.boolean(rest);
+			break;
+	}
+	return prev;
+};
 
-    return extraFlags;
+const generateEnvironmentDeploymentFlags = (): Record<string, Flag> => {
+	let extraFlags = {};
+	if (global.platformPackage?.deploymentContextArgs) {
+		extraFlags = Object.entries(global.platformPackage.deploymentContextArgs).reduce(convertToFlags, {});
+	}
+	return extraFlags;
+};
+
+const generateInstanceDeploymentFlags = (): Record<string, Flag> => {
+	let extraFlags = {};
+	if (global.tenantPackage?.deploymentContextArgs) {
+		extraFlags = Object.entries(global.tenantPackage.deploymentContextArgs).reduce(convertToFlags, {});
+	}
+	return extraFlags;
 };
 
 export default class SifHelp extends Help {
-    public getCommandHelpClass(command: Command.Class | Command.Loadable | Command.Cached): CommandHelp {
-        let extraFlags = {};
-        switch (command.id) {
-            case "environment configure":
-            case "environment install":
-            case "environment upgrade":
-                extraFlags = generateVersionSpecificFlags("platform");
-                break;
+	public getCommandHelpClass(command: Command.Class | Command.Loadable | Command.Cached): CommandHelp {
+		let extraFlags = {};
+		switch (command.id) {
+			case "environment configure":
+			case "environment install":
+			case "environment upgrade":
+				extraFlags = generateEnvironmentDeploymentFlags();
+				break;
 			case "instance configure":
 			case "instance install":
 			case "instance upgrade":
-				extraFlags = generateVersionSpecificFlags("tenant");
-			break;
-        }
+				extraFlags = generateInstanceDeploymentFlags();
+				break;
+		}
 
-        command.flags = {
-            ...command.flags,
-            ...extraFlags
-        };
+		command.flags = {
+			...command.flags,
+			...extraFlags
+		};
 
-        return new this.CommandHelpClass(command, this.config, this.opts);
-    }
+		return new this.CommandHelpClass(command, this.config, this.opts);
+	}
 }
 
 export {
-    generateVersionSpecificFlags
+	generateEnvironmentDeploymentFlags,
+	generateInstanceDeploymentFlags
 };
 

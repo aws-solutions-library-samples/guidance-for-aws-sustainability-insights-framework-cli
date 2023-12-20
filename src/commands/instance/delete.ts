@@ -21,6 +21,7 @@ import { switchToTenantLocation } from "../../utils/shell";
 export class InstanceDelete extends DeploymentCommand<typeof InstanceDelete> {
 	public static description = "Delete the sif tenant.";
 	public static flags = {
+		...this.baseFlags,
 		environment: Flags.string(
 			{
 				char: "e",

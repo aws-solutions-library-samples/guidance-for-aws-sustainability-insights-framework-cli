@@ -173,12 +173,13 @@ Modify SIF configuration for the specified environment
 
 ```
 USAGE
-  $ sif environment configure -e <value> [-r <value>] [--json] [-h -c <value>]
+  $ sif environment configure -e <value> [-r <value>] [-l <value>] [--json] [-h -c <value>]
 
 FLAGS
   -c, --config=<value>       Path to configuration file used for deployment
   -e, --environment=<value>  (required) An environment represents an isolated deployment of tenantId(s)
   -h, --headless             If provided, you also need to specify the path configuration file using -c
+  -l, --role=<value>         The RoleArn for the CLI to assume for deployment
   -r, --region=<value>       AWS region used when running the subcommands
 
 GLOBAL FLAGS
@@ -201,11 +202,12 @@ Delete SIF environment
 
 ```
 USAGE
-  $ sif environment delete -e <value> [-r <value>] [--json] [-f]
+  $ sif environment delete -e <value> [-r <value>] [-l <value>] [--json] [-f]
 
 FLAGS
   -e, --environment=<value>  (required) An environment represents an isolated deployment of tenantId(s)
   -f, --force                If specified, will also delete all tenants on the environment
+  -l, --role=<value>         The RoleArn for the CLI to assume for deployment
   -r, --region=<value>       AWS region used when running the subcommands
 
 GLOBAL FLAGS
@@ -228,13 +230,14 @@ Install SIF for the specified environment
 
 ```
 USAGE
-  $ sif environment install -e <value> [-r <value>] [--json] [-h -c <value>]
+  $ sif environment install -e <value> [-r <value>] [-l <value>] [--json] [-h -c <value>]
 
 FLAGS
   -c, --config=<value>       Path to configuration file used for environment upgrade
   -e, --environment=<value>  (required) An environment represents an isolated deployment of tenantId(s)
   -h, --headless             Perform SIF environment upgrade in headless mode, if specified you also need to specify the
                              configuration file
+  -l, --role=<value>         The RoleArn for the CLI to assume for deployment
   -r, --region=<value>       AWS region used when running the subcommands
 
 GLOBAL FLAGS
@@ -257,9 +260,10 @@ List SIF installed environments
 
 ```
 USAGE
-  $ sif environment list [-r <value>] [--json]
+  $ sif environment list [-r <value>] [-l <value>] [--json]
 
 FLAGS
+  -l, --role=<value>    The RoleArn for the CLI to assume for deployment
   -r, --region=<value>  AWS region used when running the subcommands
 
 GLOBAL FLAGS
@@ -280,13 +284,14 @@ Perform upgrade of SIF environment version
 
 ```
 USAGE
-  $ sif environment upgrade -e <value> [-r <value>] [--json] [-u <value>] [-h -c <value>]
+  $ sif environment upgrade -e <value> [-r <value>] [-l <value>] [--json] [-u <value>] [-h -c <value>]
 
 FLAGS
   -c, --config=<value>          Path to configuration file used for environment upgrade
   -e, --environment=<value>     (required) An environment represents an isolated deployment of tenantId(s)
   -h, --headless                Perform SIF environment upgrade in headless mode, if specified you also need to specify
                                 the configuration file
+  -l, --role=<value>            The RoleArn for the CLI to assume for deployment
   -r, --region=<value>          AWS region used when running the subcommands
   -u, --upgradeTenants=<value>  Upgrade all tenants to match the local version
 
@@ -310,10 +315,11 @@ Return the version of deployed environment
 
 ```
 USAGE
-  $ sif environment version -e <value> [-r <value>] [--json]
+  $ sif environment version -e <value> [-r <value>] [-l <value>] [--json]
 
 FLAGS
   -e, --environment=<value>  (required) An environment represents an isolated deployment of tenantId(s)
+  -l, --role=<value>         The RoleArn for the CLI to assume for deployment
   -r, --region=<value>       AWS region used when running the subcommands
 
 GLOBAL FLAGS
@@ -354,7 +360,10 @@ Install SIF dependencies
 
 ```
 USAGE
-  $ sif init
+  $ sif init [-p <value>]
+
+FLAGS
+  -p, --projectPath=<value>  path of the sif core project to be used when you are not directly cloning
 
 DESCRIPTION
   Install SIF dependencies
@@ -371,11 +380,12 @@ Walks the user through the authentication process to get a JWT token to be used 
 
 ```
 USAGE
-  $ sif instance auth -e <value> -t <value> -u <value> -p <value> -g <value> [-r <value>]
+  $ sif instance auth -e <value> -t <value> -u <value> -p <value> [-r <value>] [-l <value>] [-n <value>]
 
 FLAGS
   -e, --environment=<value>  (required) The environment to authenticate against
-  -g, --groupId=<value>      (required) [default: /] The groupId for the token
+  -l, --role=<value>         The RoleArn for the CLI to assume for deployment
+  -n, --newPassword=<value>  The new password to be set for the user
   -p, --password=<value>     (required) The password of the user
   -r, --region=<value>       AWS region used when running the subcommands
   -t, --tenantId=<value>     (required) The id of the tenant to authenticate against
@@ -385,7 +395,9 @@ DESCRIPTION
   Walks the user through the authentication process to get a JWT token to be used for API calls.
 
 EXAMPLES
-  $ sif instance auth -t demo -e prod -r us-west-2 -a 1234567
+  $ sif instance auth -t demo -e prod -r us-west-2 -u username -p password
+
+  $ sif instance auth -t demo -e prod -r us-west-2 -u username -p password -n newPassword
 ```
 
 _See code: [dist/commands/instance/auth.ts](https://github.com/aws-solutions-library-sample/sif-cli/blob/v0.1.0/dist/commands/instance/auth.ts)_
@@ -396,13 +408,14 @@ Redeploys the same instance version.
 
 ```
 USAGE
-  $ sif instance configure -e <value> -t <value> [-r <value>] [-h -c <value>]
+  $ sif instance configure -e <value> -t <value> [-r <value>] [-l <value>] [-h -c <value>]
 
 FLAGS
   -c, --config=<value>       Path to configuration file used for deployment
   -e, --environment=<value>  (required) The environment to redeploy the same instance version to
   -h, --headless             If provided, bypass the questions. You will also need to specify the path configuration
                              file using -c
+  -l, --role=<value>         The RoleArn for the CLI to assume for deployment
   -r, --region=<value>       AWS region used when running the subcommands
   -t, --tenantId=<value>     (required) The id of the tenant to redeploy
 
@@ -421,10 +434,11 @@ Delete the sif tenant.
 
 ```
 USAGE
-  $ sif instance delete -e <value> -t <value> [-r <value>]
+  $ sif instance delete -e <value> -t <value> [-r <value>] [-l <value>]
 
 FLAGS
   -e, --environment=<value>  (required) The environment to delete the tenant from
+  -l, --role=<value>         The RoleArn for the CLI to assume for deployment
   -r, --region=<value>       AWS region used when running the subcommands
   -t, --tenantId=<value>     (required) The id of the tenant to delete
 
@@ -440,10 +454,11 @@ Walks the user through the process to generate the insomnia environment file.
 
 ```
 USAGE
-  $ sif instance insomnia -e <value> -t <value> [-r <value>]
+  $ sif instance insomnia -e <value> -t <value> [-r <value>] [-l <value>]
 
 FLAGS
   -e, --environment=<value>  (required) The environment used to generate the insomnia environment file
+  -l, --role=<value>         The RoleArn for the CLI to assume for deployment
   -r, --region=<value>       AWS region used when running the subcommands
   -t, --tenantId=<value>     (required) The id of the tenant used to generate the insomnia environment file
 
@@ -459,13 +474,14 @@ Walks the user through an interactive list of questions needed to deploy sif cor
 
 ```
 USAGE
-  $ sif instance install -e <value> -t <value> [-r <value>] [-h -c <value>]
+  $ sif instance install -e <value> -t <value> [-r <value>] [-l <value>] [-h -c <value>]
 
 FLAGS
   -c, --config=<value>       Path to configuration file used for deployment
   -e, --environment=<value>  (required) The environment to deploy the tenant to
   -h, --headless             If provided, bypass the questions. You will also need to specify the path configuration
                              file using -c
+  -l, --role=<value>         The RoleArn for the CLI to assume for deployment
   -r, --region=<value>       AWS region used when running the subcommands
   -t, --tenantId=<value>     (required) The id of the tenant to deploy
 
@@ -505,10 +521,11 @@ Walks the user through the process to generate the postman environment file.
 
 ```
 USAGE
-  $ sif instance postman -e <value> -t <value> [-r <value>]
+  $ sif instance postman -e <value> -t <value> [-r <value>] [-l <value>]
 
 FLAGS
   -e, --environment=<value>  (required) The environment used to generate the postman environment file
+  -l, --role=<value>         The RoleArn for the CLI to assume for deployment
   -r, --region=<value>       AWS region used when running the subcommands
   -t, --tenantId=<value>     (required) The tenantId used to generate the postman environment file
 
@@ -527,10 +544,11 @@ Run the selected SIF module locally
 
 ```
 USAGE
-  $ sif instance start -e <value> -t <value> -m <value> [-r <value>]
+  $ sif instance start -e <value> -t <value> -m <value> [-r <value>] [-l <value>]
 
 FLAGS
   -e, --environment=<value>  (required) SIF environment to use for starting the module
+  -l, --role=<value>         The RoleArn for the CLI to assume for deployment
   -m, --module=<value>       (required) SIF module to run
   -r, --region=<value>       AWS region used when running the subcommands
   -t, --tenantId=<value>     (required) SIF tenantId to use for starting the module
@@ -550,13 +568,14 @@ Perform upgrade of SIF instance version
 
 ```
 USAGE
-  $ sif instance upgrade -e <value> -t <value> [-r <value>] [-h -c <value>]
+  $ sif instance upgrade -e <value> -t <value> [-r <value>] [-l <value>] [-h -c <value>]
 
 FLAGS
   -c, --config=<value>       Path to configuration file used for upgrade
   -e, --environment=<value>  (required) The environment to upgrade the tenant for
   -h, --headless             If provided, bypass the questions. You will also need to specify the path configuration
                              file using -c
+  -l, --role=<value>         The RoleArn for the CLI to assume for deployment
   -r, --region=<value>       AWS region used when running the subcommands
   -t, --tenantId=<value>     (required) The id of the tenant to upgrade
 
@@ -590,7 +609,7 @@ EXAMPLES
   $ sif plugins
 ```
 
-_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v3.2.6/src/commands/plugins/index.ts)_
+_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v3.8.4/src/commands/plugins/index.ts)_
 
 ## `sif plugins:install PLUGIN...`
 
@@ -655,7 +674,7 @@ EXAMPLES
   $ sif plugins:inspect myplugin
 ```
 
-_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v3.2.6/src/commands/plugins/inspect.ts)_
+_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v3.8.4/src/commands/plugins/inspect.ts)_
 
 ## `sif plugins:install PLUGIN...`
 
@@ -695,7 +714,7 @@ EXAMPLES
   $ sif plugins:install someuser/someplugin
 ```
 
-_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v3.2.6/src/commands/plugins/install.ts)_
+_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v3.8.4/src/commands/plugins/install.ts)_
 
 ## `sif plugins:link PLUGIN`
 
@@ -724,7 +743,7 @@ EXAMPLES
   $ sif plugins:link myplugin
 ```
 
-_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v3.2.6/src/commands/plugins/link.ts)_
+_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v3.8.4/src/commands/plugins/link.ts)_
 
 ## `sif plugins:uninstall PLUGIN...`
 
@@ -772,7 +791,7 @@ ALIASES
   $ sif plugins remove
 ```
 
-_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v3.2.6/src/commands/plugins/uninstall.ts)_
+_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v3.8.4/src/commands/plugins/uninstall.ts)_
 
 ## `sif plugins:uninstall PLUGIN...`
 
@@ -813,5 +832,5 @@ DESCRIPTION
   Update installed plugins.
 ```
 
-_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v3.2.6/src/commands/plugins/update.ts)_
+_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v3.8.4/src/commands/plugins/update.ts)_
 <!-- commandsstop -->

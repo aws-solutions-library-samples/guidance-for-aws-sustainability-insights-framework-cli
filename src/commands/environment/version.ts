@@ -24,6 +24,7 @@ export default class EnvironmentVersion extends DeploymentCommand<typeof Environ
 	public static enableJsonFlag = true;
 
 	public static flags = {
+		...this.baseFlags,
 		environment: Flags.string(
 			{
 				char: "e",

@@ -20,6 +20,7 @@ import { DeploymentCommand } from "../../types/deploymentCommand";
 export class InstanceStart extends DeploymentCommand<typeof InstanceStart> {
 	public static description = "Run the selected SIF module locally";
 	public static flags = {
+		...this.baseFlags,
 		environment: Flags.string(
 			{
 				char: "e",

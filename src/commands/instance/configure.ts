@@ -17,10 +17,13 @@ import * as rushlib from "@microsoft/rush-lib";
 import { getAnswers, getSavedAnswers, saveAnswers } from "../../utils/answers";
 import { getDeployedEnvironment, getLocalRepositoryVersion } from "../../utils/github";
 import { DeploymentCommand } from "../../types/deploymentCommand";
+import { generateInstanceDeploymentFlags } from "../../utils/help";
+import { Command } from "@oclif/core/lib/command";
 
 export class InstanceConfigure extends DeploymentCommand<typeof InstanceConfigure> {
 	public static description = "Redeploys the same instance version.";
 	public static flags = {
+		...this.baseFlags,
 		environment: Flags.string(
 			{
 				char: "e",
@@ -55,6 +58,9 @@ export class InstanceConfigure extends DeploymentCommand<typeof InstanceConfigur
 		"<%= config.bin %> <%= command.id %> -t demo -e prod -r us-west-2",
 	];
 
+	protected override generateFlags(): Record<string, Command.Flag> {
+		return generateInstanceDeploymentFlags();
+	}
 
 	public async runChild(): Promise<Record<string, any>> {
 

@@ -19,6 +19,7 @@ import { DeploymentCommand } from "../../types/deploymentCommand";
 export class InstanceAuth extends DeploymentCommand<typeof InstanceAuth> {
 	public static description = "Walks the user through the authentication process to get a JWT token to be used for API calls.";
 	public static flags = {
+		...this.baseFlags,
 		environment: Flags.string(
 			{
 				char: "e",

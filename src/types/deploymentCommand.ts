@@ -14,48 +14,51 @@
 import { Command, Flags, Parser } from "@oclif/core";
 import shelljs from "shelljs";
 import { ArgOutput, FlagOutput, Input, ParserOutput } from "@oclif/core/lib/interfaces/parser";
-import { generateVersionSpecificFlags } from "../utils/help";
 import { switchToSifCore } from "../utils/shell";
 
 export abstract class DeploymentCommand<T extends typeof Command> extends Command {
-    abstract runChild(): Promise<Record<string, unknown> | Record<string, unknown>[] | void>;
+	abstract runChild(): Promise<Record<string, unknown> | Record<string, unknown>[] | void>;
 
-    static baseFlags = {
-        region: Flags.string({
-            description: "AWS region used when running the subcommands",
-            char: "r"
-        }),
+	static baseFlags = {
+		region: Flags.string({
+			description: "AWS region used when running the subcommands",
+			char: "r"
+		}),
 		role: Flags.string({
-            description: "The RoleArn for the CLI to assume for deployment",
-            char: "l"
-        }),
-    };
+			description: "The RoleArn for the CLI to assume for deployment",
+			char: "l"
+		}),
+	};
 
-    public async parse<F extends FlagOutput
-        , B extends FlagOutput, A extends ArgOutput>(options?: Input<F, B, A>, argv = this.argv): Promise<ParserOutput<F, B, A>> {
-        if (!options) options = this.ctor as Input<F, B, A>;
-        const opts = { context: this, ...options };
-        // @ts-ignore
-        opts.flags = {
-            ...options?.flags ?? {},
-            ...generateVersionSpecificFlags("platform")
-        };
-        opts.args = options?.args;
-        const results = await Parser.parse<F, B, A>(argv, opts);
-        this.warnIfFlagDeprecated(results.flags ?? {});
+	protected generateFlags(): Record<string, Command.Flag> {
+		return {};
+	}
 
-        return results;
-    }
+	public async parse<F extends FlagOutput
+		, B extends FlagOutput, A extends ArgOutput>(options?: Input<F, B, A>, argv = this.argv): Promise<ParserOutput<F, B, A>> {
+		if (!options) options = this.ctor as Input<F, B, A>;
+		const opts = { context: this, ...options };
+		// @ts-ignore
+		opts.flags = {
+			...options?.flags ?? {},
+			...this.generateFlags()
+		};
+		opts.args = options?.args;
+		const results = await Parser.parse<F, B, A>(argv, opts);
+		this.warnIfFlagDeprecated(results.flags ?? {});
 
-    public async run(): Promise<Record<string, unknown> | Record<string, unknown>[] | void> {
-        await switchToSifCore();
-        const { flags } = await this.parse();
-        if (flags.region) {
-            // used by aws cdk running in child shell
-            shelljs.env.SIF_REGION = flags.region;
-            // used by aws sdk running in current shell
-            process.env.SIF_REGION = flags.region;
-        }
-        return await this.runChild();
-    }
+		return results;
+	}
+
+	public async run(): Promise<Record<string, unknown> | Record<string, unknown>[] | void> {
+		await switchToSifCore();
+		const { flags } = await this.parse();
+		if (flags.region) {
+			// used by aws cdk running in child shell
+			shelljs.env.SIF_REGION = flags.region;
+			// used by aws sdk running in current shell
+			process.env.SIF_REGION = flags.region;
+		}
+		return await this.runChild();
+	}
 }

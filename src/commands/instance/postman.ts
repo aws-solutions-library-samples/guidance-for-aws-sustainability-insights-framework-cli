@@ -19,6 +19,7 @@ import { DeploymentCommand } from "../../types/deploymentCommand";
 export class InstancePostman extends DeploymentCommand<typeof InstancePostman> {
 	public static description = "Walks the user through the process to generate the postman environment file.";
 	public static flags = {
+		...this.baseFlags,
 		environment: Flags.string(
 			{
 				char: "e",

@@ -27,6 +27,7 @@ export class EnvironmentDelete extends DeploymentCommand<typeof EnvironmentDelet
     public static enableJsonFlag = true;
 
     public static flags = {
+		...this.baseFlags,
         environment: Flags.string(
             {
                 char: "e",

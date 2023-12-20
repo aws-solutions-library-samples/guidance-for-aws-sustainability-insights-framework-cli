@@ -18,11 +18,14 @@ import { getAnswers, getSavedAnswers, saveAnswers } from "../../utils/answers";
 import { getDeployedEnvironment, getLocalRepositoryVersion } from "../../utils/github";
 import { compareVersions } from "compare-versions";
 import { DeploymentCommand } from "../../types/deploymentCommand";
+import { generateInstanceDeploymentFlags } from "../../utils/help";
+import { Command } from "@oclif/core/lib/command";
 
 
 export class InstanceUpgrade extends DeploymentCommand<typeof InstanceUpgrade> {
 	public static description = "Perform upgrade of SIF instance version";
 	public static flags = {
+		...this.baseFlags,
 		environment: Flags.string(
 			{
 				char: "e",
@@ -57,6 +60,9 @@ export class InstanceUpgrade extends DeploymentCommand<typeof InstanceUpgrade> {
 		"<%= config.bin %> <%= command.id %> -t demo -e prod -r us-west-2 -a 1234567",
 	];
 
+	protected override generateFlags(): Record<string, Command.Flag> {
+		return generateInstanceDeploymentFlags();
+	}
 
 	public async runChild(): Promise<Record<string, any>> {
 
@@ -105,7 +111,7 @@ export class InstanceUpgrade extends DeploymentCommand<typeof InstanceUpgrade> {
 
 		const params = `-c environment=${flags.environment} -c tenantId=${flags.tenantId}`;
 		shelljs.cd(moduleConfiguration.projectFolder);
-		shelljs.exec(`npm run cdk -- synth --all --concurrency=10  --require-approval never ${(flags?.role)? "--r "+ flags.role : "" }  ${params}}`);
+		shelljs.exec(`npm run cdk -- synth --all --concurrency=10  --require-approval never ${(flags?.role) ? "--r " + flags.role : ""}  ${params}}`);
 		return answers;
 
 	}

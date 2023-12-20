@@ -18,6 +18,7 @@ import { table } from "table";
 export class InstanceList extends Command {
 	public static description = "Lists all deployed tenants within a specific environment";
 	public static flags = {
+		...this.baseFlags,
 		environment: Flags.string(
 			{
 				char: "e",
