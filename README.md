@@ -17,7 +17,7 @@ $ npm install -g @sif/cli
 $ sif COMMAND
 running command...
 $ sif (--version)
-@sif/cli/0.1.0 darwin-x64 node-v18.17.1
+@sif/cli/1.0.0 darwin-x64 node-v18.18.2
 $ sif --help [COMMAND]
 USAGE
   $ sif COMMAND
@@ -56,6 +56,7 @@ USAGE
 * [`sif plugins:install PLUGIN...`](#sif-pluginsinstall-plugin-1)
 * [`sif plugins:link PLUGIN`](#sif-pluginslink-plugin)
 * [`sif plugins:uninstall PLUGIN...`](#sif-pluginsuninstall-plugin)
+* [`sif plugins reset`](#sif-plugins-reset)
 * [`sif plugins:uninstall PLUGIN...`](#sif-pluginsuninstall-plugin-1)
 * [`sif plugins:uninstall PLUGIN...`](#sif-pluginsuninstall-plugin-2)
 * [`sif plugins update`](#sif-plugins-update)
@@ -75,7 +76,7 @@ EXAMPLES
   $ sif core build
 ```
 
-_See code: [dist/commands/core/build.ts](https://github.com/aws-solutions-library-sample/sif-cli/blob/v0.1.0/dist/commands/core/build.ts)_
+_See code: [src/commands/core/build.ts](https://github.com/aws-solutions-library-sample/sif-cli/blob/v1.0.0/src/commands/core/build.ts)_
 
 ## `sif core clone`
 
@@ -97,7 +98,7 @@ EXAMPLES
   $ sif core clone
 ```
 
-_See code: [dist/commands/core/clone.ts](https://github.com/aws-solutions-library-sample/sif-cli/blob/v0.1.0/dist/commands/core/clone.ts)_
+_See code: [src/commands/core/clone.ts](https://github.com/aws-solutions-library-sample/sif-cli/blob/v1.0.0/src/commands/core/clone.ts)_
 
 ## `sif core releases`
 
@@ -105,10 +106,7 @@ Listing the existing tags in the SIF repository
 
 ```
 USAGE
-  $ sif core releases [--json]
-
-GLOBAL FLAGS
-  --json  Format output as json.
+  $ sif core releases
 
 DESCRIPTION
   Listing the existing tags in the SIF repository
@@ -117,7 +115,7 @@ EXAMPLES
   $ sif core releases
 ```
 
-_See code: [dist/commands/core/releases.ts](https://github.com/aws-solutions-library-sample/sif-cli/blob/v0.1.0/dist/commands/core/releases.ts)_
+_See code: [src/commands/core/releases.ts](https://github.com/aws-solutions-library-sample/sif-cli/blob/v1.0.0/src/commands/core/releases.ts)_
 
 ## `sif core switch`
 
@@ -145,7 +143,7 @@ EXAMPLES
   $ sif core switch -r LATEST
 ```
 
-_See code: [dist/commands/core/switch.ts](https://github.com/aws-solutions-library-sample/sif-cli/blob/v0.1.0/dist/commands/core/switch.ts)_
+_See code: [src/commands/core/switch.ts](https://github.com/aws-solutions-library-sample/sif-cli/blob/v1.0.0/src/commands/core/switch.ts)_
 
 ## `sif core version`
 
@@ -153,10 +151,7 @@ Print the release tag currently checked out. If there is no release tag, show th
 
 ```
 USAGE
-  $ sif core version [--json]
-
-GLOBAL FLAGS
-  --json  Format output as json.
+  $ sif core version
 
 DESCRIPTION
   Print the release tag currently checked out. If there is no release tag, show the branch and commit id
@@ -165,7 +160,7 @@ EXAMPLES
   $ sif core version
 ```
 
-_See code: [dist/commands/core/version.ts](https://github.com/aws-solutions-library-sample/sif-cli/blob/v0.1.0/dist/commands/core/version.ts)_
+_See code: [src/commands/core/version.ts](https://github.com/aws-solutions-library-sample/sif-cli/blob/v1.0.0/src/commands/core/version.ts)_
 
 ## `sif environment configure`
 
@@ -173,7 +168,7 @@ Modify SIF configuration for the specified environment
 
 ```
 USAGE
-  $ sif environment configure -e <value> [-r <value>] [-l <value>] [--json] [-h -c <value>]
+  $ sif environment configure -e <value> [-r <value>] [-l <value>] [-h -c <value>]
 
 FLAGS
   -c, --config=<value>       Path to configuration file used for deployment
@@ -181,9 +176,6 @@ FLAGS
   -h, --headless             If provided, you also need to specify the path configuration file using -c
   -l, --role=<value>         The RoleArn for the CLI to assume for deployment
   -r, --region=<value>       AWS region used when running the subcommands
-
-GLOBAL FLAGS
-  --json  Format output as json.
 
 DESCRIPTION
   Modify SIF configuration for the specified environment
@@ -194,7 +186,7 @@ EXAMPLES
   $ sif environment configure -e stage -h -c <PATH_TO_CONFIG_FILE>
 ```
 
-_See code: [dist/commands/environment/configure.ts](https://github.com/aws-solutions-library-sample/sif-cli/blob/v0.1.0/dist/commands/environment/configure.ts)_
+_See code: [src/commands/environment/configure.ts](https://github.com/aws-solutions-library-sample/sif-cli/blob/v1.0.0/src/commands/environment/configure.ts)_
 
 ## `sif environment delete`
 
@@ -202,16 +194,13 @@ Delete SIF environment
 
 ```
 USAGE
-  $ sif environment delete -e <value> [-r <value>] [-l <value>] [--json] [-f]
+  $ sif environment delete -e <value> [-r <value>] [-l <value>] [-f]
 
 FLAGS
   -e, --environment=<value>  (required) An environment represents an isolated deployment of tenantId(s)
   -f, --force                If specified, will also delete all tenants on the environment
   -l, --role=<value>         The RoleArn for the CLI to assume for deployment
   -r, --region=<value>       AWS region used when running the subcommands
-
-GLOBAL FLAGS
-  --json  Format output as json.
 
 DESCRIPTION
   Delete SIF environment
@@ -222,7 +211,7 @@ EXAMPLES
   $ sif environment delete -e stage --force
 ```
 
-_See code: [dist/commands/environment/delete.ts](https://github.com/aws-solutions-library-sample/sif-cli/blob/v0.1.0/dist/commands/environment/delete.ts)_
+_See code: [src/commands/environment/delete.ts](https://github.com/aws-solutions-library-sample/sif-cli/blob/v1.0.0/src/commands/environment/delete.ts)_
 
 ## `sif environment install`
 
@@ -230,7 +219,7 @@ Install SIF for the specified environment
 
 ```
 USAGE
-  $ sif environment install -e <value> [-r <value>] [-l <value>] [--json] [-h -c <value>]
+  $ sif environment install -e <value> [-r <value>] [-l <value>] [-h -c <value>]
 
 FLAGS
   -c, --config=<value>       Path to configuration file used for environment upgrade
@@ -239,9 +228,6 @@ FLAGS
                              configuration file
   -l, --role=<value>         The RoleArn for the CLI to assume for deployment
   -r, --region=<value>       AWS region used when running the subcommands
-
-GLOBAL FLAGS
-  --json  Format output as json.
 
 DESCRIPTION
   Install SIF for the specified environment
@@ -252,7 +238,7 @@ EXAMPLES
   $ sif environment install -e stage -h -c <PATH_TO_CONFIG_FILE>
 ```
 
-_See code: [dist/commands/environment/install.ts](https://github.com/aws-solutions-library-sample/sif-cli/blob/v0.1.0/dist/commands/environment/install.ts)_
+_See code: [src/commands/environment/install.ts](https://github.com/aws-solutions-library-sample/sif-cli/blob/v1.0.0/src/commands/environment/install.ts)_
 
 ## `sif environment list`
 
@@ -260,14 +246,7 @@ List SIF installed environments
 
 ```
 USAGE
-  $ sif environment list [-r <value>] [-l <value>] [--json]
-
-FLAGS
-  -l, --role=<value>    The RoleArn for the CLI to assume for deployment
-  -r, --region=<value>  AWS region used when running the subcommands
-
-GLOBAL FLAGS
-  --json  Format output as json.
+  $ sif environment list
 
 DESCRIPTION
   List SIF installed environments
@@ -276,7 +255,7 @@ EXAMPLES
   $ sif environment list
 ```
 
-_See code: [dist/commands/environment/list.ts](https://github.com/aws-solutions-library-sample/sif-cli/blob/v0.1.0/dist/commands/environment/list.ts)_
+_See code: [src/commands/environment/list.ts](https://github.com/aws-solutions-library-sample/sif-cli/blob/v1.0.0/src/commands/environment/list.ts)_
 
 ## `sif environment upgrade`
 
@@ -284,7 +263,7 @@ Perform upgrade of SIF environment version
 
 ```
 USAGE
-  $ sif environment upgrade -e <value> [-r <value>] [-l <value>] [--json] [-u <value>] [-h -c <value>]
+  $ sif environment upgrade -e <value> [-r <value>] [-l <value>] [-u <value>] [-h -c <value>]
 
 FLAGS
   -c, --config=<value>          Path to configuration file used for environment upgrade
@@ -295,9 +274,6 @@ FLAGS
   -r, --region=<value>          AWS region used when running the subcommands
   -u, --upgradeTenants=<value>  Upgrade all tenants to match the local version
 
-GLOBAL FLAGS
-  --json  Format output as json.
-
 DESCRIPTION
   Perform upgrade of SIF environment version
 
@@ -307,7 +283,7 @@ EXAMPLES
   $ sif environment upgrade -e stage -h -c <PATH_TO_CONFIG_FILE>
 ```
 
-_See code: [dist/commands/environment/upgrade.ts](https://github.com/aws-solutions-library-sample/sif-cli/blob/v0.1.0/dist/commands/environment/upgrade.ts)_
+_See code: [src/commands/environment/upgrade.ts](https://github.com/aws-solutions-library-sample/sif-cli/blob/v1.0.0/src/commands/environment/upgrade.ts)_
 
 ## `sif environment version`
 
@@ -315,15 +291,12 @@ Return the version of deployed environment
 
 ```
 USAGE
-  $ sif environment version -e <value> [-r <value>] [-l <value>] [--json]
+  $ sif environment version -e <value> [-r <value>] [-l <value>]
 
 FLAGS
   -e, --environment=<value>  (required) An environment represents an isolated deployment of tenantId(s)
   -l, --role=<value>         The RoleArn for the CLI to assume for deployment
   -r, --region=<value>       AWS region used when running the subcommands
-
-GLOBAL FLAGS
-  --json  Format output as json.
 
 DESCRIPTION
   Return the version of deployed environment
@@ -332,7 +305,7 @@ EXAMPLES
   $ sif environment version -e stage
 ```
 
-_See code: [dist/commands/environment/version.ts](https://github.com/aws-solutions-library-sample/sif-cli/blob/v0.1.0/dist/commands/environment/version.ts)_
+_See code: [src/commands/environment/version.ts](https://github.com/aws-solutions-library-sample/sif-cli/blob/v1.0.0/src/commands/environment/version.ts)_
 
 ## `sif help [COMMANDS]`
 
@@ -352,7 +325,7 @@ DESCRIPTION
   Display help for sif.
 ```
 
-_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v5.2.17/src/commands/help.ts)_
+_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v5.2.20/src/commands/help.ts)_
 
 ## `sif init`
 
@@ -372,7 +345,7 @@ EXAMPLES
   $ sif init
 ```
 
-_See code: [dist/commands/init/index.ts](https://github.com/aws-solutions-library-sample/sif-cli/blob/v0.1.0/dist/commands/init/index.ts)_
+_See code: [src/commands/init/index.ts](https://github.com/aws-solutions-library-sample/sif-cli/blob/v1.0.0/src/commands/init/index.ts)_
 
 ## `sif instance auth`
 
@@ -400,7 +373,7 @@ EXAMPLES
   $ sif instance auth -t demo -e prod -r us-west-2 -u username -p password -n newPassword
 ```
 
-_See code: [dist/commands/instance/auth.ts](https://github.com/aws-solutions-library-sample/sif-cli/blob/v0.1.0/dist/commands/instance/auth.ts)_
+_See code: [src/commands/instance/auth.ts](https://github.com/aws-solutions-library-sample/sif-cli/blob/v1.0.0/src/commands/instance/auth.ts)_
 
 ## `sif instance configure`
 
@@ -426,7 +399,7 @@ EXAMPLES
   $ sif instance configure -t demo -e prod -r us-west-2
 ```
 
-_See code: [dist/commands/instance/configure.ts](https://github.com/aws-solutions-library-sample/sif-cli/blob/v0.1.0/dist/commands/instance/configure.ts)_
+_See code: [src/commands/instance/configure.ts](https://github.com/aws-solutions-library-sample/sif-cli/blob/v1.0.0/src/commands/instance/configure.ts)_
 
 ## `sif instance delete`
 
@@ -446,7 +419,7 @@ DESCRIPTION
   Delete the sif tenant.
 ```
 
-_See code: [dist/commands/instance/delete.ts](https://github.com/aws-solutions-library-sample/sif-cli/blob/v0.1.0/dist/commands/instance/delete.ts)_
+_See code: [src/commands/instance/delete.ts](https://github.com/aws-solutions-library-sample/sif-cli/blob/v1.0.0/src/commands/instance/delete.ts)_
 
 ## `sif instance insomnia`
 
@@ -466,7 +439,7 @@ DESCRIPTION
   Walks the user through the process to generate the insomnia environment file.
 ```
 
-_See code: [dist/commands/instance/insomnia.ts](https://github.com/aws-solutions-library-sample/sif-cli/blob/v0.1.0/dist/commands/instance/insomnia.ts)_
+_See code: [src/commands/instance/insomnia.ts](https://github.com/aws-solutions-library-sample/sif-cli/blob/v1.0.0/src/commands/instance/insomnia.ts)_
 
 ## `sif instance install`
 
@@ -492,7 +465,7 @@ EXAMPLES
   $ sif instance install -t demo -e prod -r us-west-2
 ```
 
-_See code: [dist/commands/instance/install.ts](https://github.com/aws-solutions-library-sample/sif-cli/blob/v0.1.0/dist/commands/instance/install.ts)_
+_See code: [src/commands/instance/install.ts](https://github.com/aws-solutions-library-sample/sif-cli/blob/v1.0.0/src/commands/instance/install.ts)_
 
 ## `sif instance list`
 
@@ -513,7 +486,7 @@ EXAMPLES
   $ sif instance list -t demo -e prod -r us-west-2 -a 1234567
 ```
 
-_See code: [dist/commands/instance/list.ts](https://github.com/aws-solutions-library-sample/sif-cli/blob/v0.1.0/dist/commands/instance/list.ts)_
+_See code: [src/commands/instance/list.ts](https://github.com/aws-solutions-library-sample/sif-cli/blob/v1.0.0/src/commands/instance/list.ts)_
 
 ## `sif instance postman`
 
@@ -536,7 +509,7 @@ EXAMPLES
   $ sif instance postman -t demo -e prod -r us-west-2 -a 1234567
 ```
 
-_See code: [dist/commands/instance/postman.ts](https://github.com/aws-solutions-library-sample/sif-cli/blob/v0.1.0/dist/commands/instance/postman.ts)_
+_See code: [src/commands/instance/postman.ts](https://github.com/aws-solutions-library-sample/sif-cli/blob/v1.0.0/src/commands/instance/postman.ts)_
 
 ## `sif instance start`
 
@@ -560,7 +533,7 @@ EXAMPLES
   $ sif instance start -m pipelines
 ```
 
-_See code: [dist/commands/instance/start.ts](https://github.com/aws-solutions-library-sample/sif-cli/blob/v0.1.0/dist/commands/instance/start.ts)_
+_See code: [src/commands/instance/start.ts](https://github.com/aws-solutions-library-sample/sif-cli/blob/v1.0.0/src/commands/instance/start.ts)_
 
 ## `sif instance upgrade`
 
@@ -586,7 +559,7 @@ EXAMPLES
   $ sif instance upgrade -t demo -e prod -r us-west-2 -a 1234567
 ```
 
-_See code: [dist/commands/instance/upgrade.ts](https://github.com/aws-solutions-library-sample/sif-cli/blob/v0.1.0/dist/commands/instance/upgrade.ts)_
+_See code: [src/commands/instance/upgrade.ts](https://github.com/aws-solutions-library-sample/sif-cli/blob/v1.0.0/src/commands/instance/upgrade.ts)_
 
 ## `sif plugins`
 
@@ -609,7 +582,7 @@ EXAMPLES
   $ sif plugins
 ```
 
-_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v3.8.4/src/commands/plugins/index.ts)_
+_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v4.1.8/src/commands/plugins/index.ts)_
 
 ## `sif plugins:install PLUGIN...`
 
@@ -625,7 +598,11 @@ ARGUMENTS
 FLAGS
   -f, --force    Run yarn install with force flag.
   -h, --help     Show CLI help.
-  -v, --verbose
+  -s, --silent   Silences yarn output.
+  -v, --verbose  Show verbose yarn output.
+
+GLOBAL FLAGS
+  --json  Format output as json.
 
 DESCRIPTION
   Installs a plugin into the CLI.
@@ -642,11 +619,11 @@ ALIASES
   $ sif plugins add
 
 EXAMPLES
-  $ sif plugins:install myplugin
+  $ sif plugins add myplugin 
 
-  $ sif plugins:install https://github.com/someuser/someplugin
+  $ sif plugins add https://github.com/someuser/someplugin
 
-  $ sif plugins:install someuser/someplugin
+  $ sif plugins add someuser/someplugin
 ```
 
 ## `sif plugins:inspect PLUGIN...`
@@ -671,10 +648,10 @@ DESCRIPTION
   Displays installation properties of a plugin.
 
 EXAMPLES
-  $ sif plugins:inspect myplugin
+  $ sif plugins inspect myplugin
 ```
 
-_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v3.8.4/src/commands/plugins/inspect.ts)_
+_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v4.1.8/src/commands/plugins/inspect.ts)_
 
 ## `sif plugins:install PLUGIN...`
 
@@ -690,7 +667,11 @@ ARGUMENTS
 FLAGS
   -f, --force    Run yarn install with force flag.
   -h, --help     Show CLI help.
-  -v, --verbose
+  -s, --silent   Silences yarn output.
+  -v, --verbose  Show verbose yarn output.
+
+GLOBAL FLAGS
+  --json  Format output as json.
 
 DESCRIPTION
   Installs a plugin into the CLI.
@@ -707,14 +688,14 @@ ALIASES
   $ sif plugins add
 
 EXAMPLES
-  $ sif plugins:install myplugin
+  $ sif plugins install myplugin 
 
-  $ sif plugins:install https://github.com/someuser/someplugin
+  $ sif plugins install https://github.com/someuser/someplugin
 
-  $ sif plugins:install someuser/someplugin
+  $ sif plugins install someuser/someplugin
 ```
 
-_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v3.8.4/src/commands/plugins/install.ts)_
+_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v4.1.8/src/commands/plugins/install.ts)_
 
 ## `sif plugins:link PLUGIN`
 
@@ -728,8 +709,9 @@ ARGUMENTS
   PATH  [default: .] path to plugin
 
 FLAGS
-  -h, --help     Show CLI help.
+  -h, --help      Show CLI help.
   -v, --verbose
+  --[no-]install  Install dependencies after linking the plugin.
 
 DESCRIPTION
   Links a plugin into the CLI for development.
@@ -740,10 +722,10 @@ DESCRIPTION
 
 
 EXAMPLES
-  $ sif plugins:link myplugin
+  $ sif plugins link myplugin
 ```
 
-_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v3.8.4/src/commands/plugins/link.ts)_
+_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v4.1.8/src/commands/plugins/link.ts)_
 
 ## `sif plugins:uninstall PLUGIN...`
 
@@ -766,7 +748,21 @@ DESCRIPTION
 ALIASES
   $ sif plugins unlink
   $ sif plugins remove
+
+EXAMPLES
+  $ sif plugins remove myplugin
 ```
+
+## `sif plugins reset`
+
+Remove all user-installed and linked plugins.
+
+```
+USAGE
+  $ sif plugins reset
+```
+
+_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v4.1.8/src/commands/plugins/reset.ts)_
 
 ## `sif plugins:uninstall PLUGIN...`
 
@@ -789,9 +785,12 @@ DESCRIPTION
 ALIASES
   $ sif plugins unlink
   $ sif plugins remove
+
+EXAMPLES
+  $ sif plugins uninstall myplugin
 ```
 
-_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v3.8.4/src/commands/plugins/uninstall.ts)_
+_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v4.1.8/src/commands/plugins/uninstall.ts)_
 
 ## `sif plugins:uninstall PLUGIN...`
 
@@ -814,6 +813,9 @@ DESCRIPTION
 ALIASES
   $ sif plugins unlink
   $ sif plugins remove
+
+EXAMPLES
+  $ sif plugins unlink myplugin
 ```
 
 ## `sif plugins update`
@@ -832,5 +834,5 @@ DESCRIPTION
   Update installed plugins.
 ```
 
-_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v3.8.4/src/commands/plugins/update.ts)_
+_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v4.1.8/src/commands/plugins/update.ts)_
 <!-- commandsstop -->
