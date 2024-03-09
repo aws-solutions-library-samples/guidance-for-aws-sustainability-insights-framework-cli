@@ -26,7 +26,7 @@
     "@microsoft/rush": "^5.82.1",
     "@oclif/core": "3.0.0",
     "@oclif/plugin-help": "^5",
-    "@oclif/plugin-plugins": "^4.1.8",
+    "@oclif/plugin-plugins": "^4.3.2",
     "@types/listr": "^0.14.9",
     "compare-versions": "6.1.0",
     "conf": "10.2.0",
