@@ -1,3 +1,6 @@
+# ⚠️ Deprecation Warning
+This repository is no longer maintained as of July 2026.
+
 sif-cli
 =================
 **The SIF Command Line Interface (sif-cli)** is an open-source tool that empowers you to interact with SIF components through commands in your command-line shell. With minimal configuration, `sif-cli` simplifies many of the complexities associated with managing SIF. Additionally, it incorporates various functionalities to ensure compatibility between your deployed version and the latest release of SIF.
